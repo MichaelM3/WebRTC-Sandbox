@@ -1,23 +1,23 @@
 import './style.css'
-import typescriptLogo from './typescript.svg'
-import { setupCounter } from './counter'
+import './firebase.ts'
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
+const servers = {
+    iceServers: [
+        {
+            urls: ["stun:stun1.l.google.com:19302", "stun:stun2.l.google.com:19302"],
+        }
+    ],
+    iceCandidatePoolSize: 10,
+}
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+let pc = new RTCPeerConnection(servers)
+let localstream = null
+let remoteStream = null
+
+const webcamButton = document.getElementById("webcamButton")
+const webcamVideo = document.getElementById("webcamVideo")
+const callButton = document.getElementById("callButton")
+const callInput = document.getElementById("callInput")
+const answerButton = document.getElementById("answerButton")
+const remoteVideo = document.getElementById("remoteVideo")
+const hangupButton = document.getElementById("hangupButton")
